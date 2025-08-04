@@ -1,4 +1,4 @@
-from modified_omj import relation_next_tuple
+from OMJ import relation_next_tuple
 
 def bf_iejoin(rel_r, X, Y, rel_r_prime, X_prime, Y_prime, op1, op2) -> list:
   '''
