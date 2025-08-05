@@ -2,23 +2,59 @@
 
 This portfolio showcases my personal and academic projects related to **data engineering**, with a focus on data pipeline orchestration, automation, and algorithmic optimisation for large-scale data processing.
 
-## 1. Apache Airflow Project
 
-An individual project developed by following this [Airflow tutorial](https://youtu.be/3xyoM28B40Y?feature=shared) and [Airflow 101: Building Your First Workflow](https://airflow.apache.org/docs/apache-airflow/stable/tutorial/fundamentals.html), aimed at understanding the fundamentals of DAG design, task scheduling, and pipeline management.
+## 1. ETL Pipeline for Merchant Transactions using Apache Airflow
 
-
-### Key features
-- Extracts data from xxx
-- Transforms and cleans data using Python
-- Loads processed data into PostgreSQL
-- Scheduled using Apache Airflow DAGs with modular task separation
+A self-contained project to explore the fundamentals of DAG design, task scheduling and pipeline orchestration. It simulates a real-world ETL scenario for merchant profiling using Apache Airflow, PostgreSQL and Python.
 
 
-### Folder
+### Goals
+- Automate the ingestion, validation, and transformation of merchant transaction data
+- Create summary-level merchant profiles
+- Ensure data consistency and integrity
+- Explore pipeline monitoring and modularisation
+
+
+### Tech Stack
+- **Tools**: Apache Airflow, PostgreSQL, Docker
+- **Languages**: Python (pandas, psycopg2)
+- **Dev Environment**: pgAdmin, Jupyter Notebook
+
+
+### Pipeline Overview
+1. **Extract:** raw CSV transaction data
+2. **Validate:** using custom Python functions
+3. **Transform:** into merchant profile metrics
+4. **Load:** clean data into PostgreSQL tables
+
+
+### Data Quality Checks
+- Nulls, duplicates, timestamp validity
+- Transaction amount sanity
+
+
+### 🖼️ Screenshots
+![Airflow DAG UI](screenshots/dag_ui.png)
+![Query results](screenshots/profile_table.png)
+
+
+### Learnings
+- Mastered DAG structuring and dependency mapping
+- Learned how to integrate Airflow with PostgreSQL
+- Designed real-world quality assurance logic for ETL flows
+
+
+### Folder structure
 ```sh
-`Project_Airflow/`
+Project_Airflow/
+├───dags/               # Core ETL logic (load, validate, transform)
+│   └───data/           # Toy data for simulation
+├───screenshots/        # DAG UI and result snapshots
+└───visualisation/      # Query result plots (Plotly, Jupyter)
 ```
+
 ---
+
 
 ## 2. MSc Thesis Project – Inequality Join Optimisation
 
