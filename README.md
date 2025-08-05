@@ -53,7 +53,7 @@ Project_Airflow/
 │   └───data/           # Toy data for simulation
 └───screenshots/        # DAG UI and result snapshots
 ```
-Note: Depending on the xxx, visualisation part will be added.
+Note: Visualisation components will be added as the project evolves.
 
 ---
 
