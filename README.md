@@ -4,11 +4,11 @@ This portfolio showcases my personal and academic projects related to **data eng
 
 ## 1. Apache Airflow Project
 
-An individual project developed by following this [Airflow tutorial](https://youtu.be/3xyoM28B40Y?feature=shared), aimed at understanding the fundamentals of DAG design, task scheduling, and pipeline management.
+An individual project developed by following this [Airflow tutorial](https://youtu.be/3xyoM28B40Y?feature=shared) and [Airflow 101: Building Your First Workflow](https://airflow.apache.org/docs/apache-airflow/stable/tutorial/fundamentals.html), aimed at understanding the fundamentals of DAG design, task scheduling, and pipeline management.
 
 
 ### Key features
-- Extracts data from Amazon API
+- Extracts data from xxx
 - Transforms and cleans data using Python
 - Loads processed data into PostgreSQL
 - Scheduled using Apache Airflow DAGs with modular task separation
@@ -27,11 +27,12 @@ A research-driven project focused on improving the efficiency of inequality join
 
 ### Overview
 - Designed and implemented multiple inequality join algorithms
-  - **Brute-force**: Brute-force: A naive nested loop implementation evaluating all possible pairs for three inequality predicates
+  - **Brute-force**: A naive nested loop implementation evaluating all possible pairs for three inequality predicates
   - **IEJoin**: An efficient inequality join algorithm using sorted indices to evaluate multiple predicates with reduced complexity
   - **RMJ (Range Merge Join)**: A join algorithm that scans sorted relations in a single direction (forward or backward) to efficiently return tuple pairs with overlapping intervals, based on inequality and overlap conditions
   - **OMJ (Overlap Merge Join)**: An extended version of RMJ that performs both forward and backward scans by executing RMJ twice with swapped input relations, effectively capturing the full symmetric overlap between tuples
 - Conducted performance evaluation using Python to compare brute-force, interval-based filtering, and index-based filtering across varying data sizes and interval overlap ratios
+
 
 ### Folder structure
 ```sh
