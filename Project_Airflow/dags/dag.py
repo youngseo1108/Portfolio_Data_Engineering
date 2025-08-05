@@ -36,7 +36,8 @@ def merchant_etl_workflow():
         
     pg_hook = PostgresHook(postgres_conn_id='transactions_connection')
     engine = pg_hook.get_sqlalchemy_engine()
-    df.to_sql('raw_transactions', con=engine, if_exists='append', index=False)
+    
+    df.to_sql('raw_transactions', con=engine, if_exists='append', index=False, method='multi')
 
   def create_merchant_profiles():
     pg_hook = PostgresHook(postgres_conn_id='transactions_connection')

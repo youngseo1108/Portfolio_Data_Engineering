@@ -5,8 +5,9 @@ This portfolio showcases my personal and academic projects related to **data eng
 
 ## 1. ETL Pipeline for Merchant Transactions using Apache Airflow
 
-A self-contained project to explore the fundamentals of DAG design, task scheduling and pipeline orchestration. It simulates a real-world ETL scenario for merchant profiling using Apache Airflow, PostgreSQL and Python.
+A self-contained project simulating a real-world ETL pipeline for merchant profiling, built with Apache Airflow, PostgreSQL, and Python. It showcases core concepts in DAG design, task orchestration, and pipeline modularity.
 
+While the load_csv_to_postgres task is currently under debugging due to a SQLAlchemy engine compatibility issue, the overall DAG structure and PostgreSQL integration logic are complete and functional. Ongoing improvements include enhanced data validation and future dashboard integration.
 
 ### Goals
 - Automate the ingestion, validation, and transformation of merchant transaction data
@@ -33,15 +34,16 @@ A self-contained project to explore the fundamentals of DAG design, task schedul
 - Transaction amount sanity
 
 
-### 🖼️ Screenshots
-![Airflow DAG UI](screenshots/dag_ui.png)
-![Query results](screenshots/profile_table.png)
+### Screenshots
+![PostgreSQL DB Set Up](Project_Airflow/screenshots/pgadmin.png)
+![Airflow DAG UI](Project_Airflow/screenshots/dag_ui.png)
+<!-- ![Query results](Project_Airflow/screenshots/profile_table.png) -->
 
 
 ### Learnings
-- Mastered DAG structuring and dependency mapping
-- Learned how to integrate Airflow with PostgreSQL
-- Designed real-world quality assurance logic for ETL flows
+- Designed DAG structures with robust task dependencies
+- Integrated Airflow with PostgreSQL using hooks and connections
+- Built validation logic to simulate real-world ETL quality assurance
 
 
 ### Folder structure
@@ -49,9 +51,9 @@ A self-contained project to explore the fundamentals of DAG design, task schedul
 Project_Airflow/
 ├───dags/               # Core ETL logic (load, validate, transform)
 │   └───data/           # Toy data for simulation
-├───screenshots/        # DAG UI and result snapshots
-└───visualisation/      # Query result plots (Plotly, Jupyter)
+└───screenshots/        # DAG UI and result snapshots
 ```
+Note: Depending on the xxx, visualisation part will be added.
 
 ---
 

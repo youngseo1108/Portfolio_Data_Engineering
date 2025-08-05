@@ -6,4 +6,5 @@ Project_Airflow/config/
 # Project_Airflow/dags/
 Project_Airflow/logs/
 Project_Airflow/plugins/
+visualisation
 __pycache__
