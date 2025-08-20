@@ -10,7 +10,7 @@ venv:
 
 # 1) Start MinIO (compose already reads ../config/.env)
 up:
-	docker compose -f infra/docker-compose.yaml up -d
+	docker compose -f docker-compose.yaml up -d
 
 # 2) Create buckets (once)
 buckets:
