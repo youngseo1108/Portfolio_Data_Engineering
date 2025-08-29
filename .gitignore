@@ -2,7 +2,5 @@ bf_iejoin.py
 iejoin_func.py
 modified_omj.py
 venv/
-data/
 debugging.ipynb
-Project_Spark_MinIO/data
 *.png

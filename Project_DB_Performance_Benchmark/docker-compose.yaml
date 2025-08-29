@@ -1,0 +1,53 @@
+version: "3.9"
+services:
+  postgres:
+    image: postgres:15
+    container_name: pg
+    ports: ["${POSTGRES_PORT}:5432"]
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./ingestion/postgres_init.sql:/docker-entrypoint-initdb.d/00_init.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+
+  minio:
+    image: minio/minio:latest
+    container_name: minio
+    command: server /data --console-address ":${MINIO_CONSOLE_PORT}"
+    environment:
+      MINIO_ROOT_USER: ${MINIO_ROOT_USER}
+      MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD}
+    ports:
+      - "${MINIO_PORT}:9000"
+      - "${MINIO_CONSOLE_PORT}:9001"
+    volumes:
+      - miniodata:/data
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9000/minio/health/live"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+
+  app:
+    image: ${PYTHON_IMAGE}
+    container_name: app
+    working_dir: /work
+    volumes:
+      - ./:/work
+    entrypoint: ["bash","-lc","pip install -q psycopg2-binary pandas matplotlib requests python-dotenv && tail -f /dev/null"]
+    depends_on:
+      postgres:
+        condition: service_healthy
+      minio:
+        condition: service_healthy
+
+volumes:
+  pgdata:
+  miniodata:
