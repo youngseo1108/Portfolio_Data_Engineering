@@ -63,13 +63,13 @@ Cloud_DB_Performance_Engineering/
 A research-driven project focused on improving the efficiency of inequality joins for interval-based data (e.g., time series or temporal ranges). Conducted as part of my Master's thesis.
 
 ### Overview
-- Designed and implemented multiple join algorithms:
-  - **Brute-force baseline**: naive nested loops across all tuples
-  - **IEJoin**: index-based inequality join leveraging sorted indices
-  - **RMJ (Range Merge Join)**: forward scan join for overlapping intervals
-  - **OMJ (Overlap Merge Join)**: symmetric extension of RMJ to capture full interval overlaps
-- Built a Python benchmarking framework to evaluate algorithm performance
-- Compared runtime and scalability across datasets with varying size and overlap ratios
+- Implemented and compared multiple join algorithms in Python:
+  - **Brute-force baseline**: naive nested loop across all tuples  
+  - **IEJoin**: index-based inequality join using sorted arrays and bitmap indexes
+  - **RMJ (Range Merge Join)**: join based on scanning ranges for overlapping intervals  
+  - **OMJ (Overlap Merge Join)**: symmetric extension of RMJ combining forward and backward scans  
+- Built a benchmarking framework to evaluate runtime performance across varying dataset sizes (1k–10k rows) and overlap densities (10–90%+).  
+- Analysed execution time, scalability, and trade-offs between filtering strategies.
 
 ### Outcomes
 - Showed that **algorithm performance depends heavily on overlap density** in interval datasets  
