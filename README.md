@@ -89,6 +89,9 @@ A research-driven project focused on improving the efficiency of inequality join
 - **RMJ/OMJ**, while theoretically efficient, performed worse than expected and in some cases slower than the baseline, revealing gaps for further optimisation
 - Overall, findings highlight the **need to adapt join strategy to dataset characteristics**, with implications for temporal and time-series query optimisation
 
+#### Visual Comparison
+![output](Thesis_Inequality_Join/output.png)
+
 ### Folder structure
 ```sh
 Thesis_Ineuqality_Join
