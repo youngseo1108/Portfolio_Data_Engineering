@@ -56,7 +56,7 @@ Cloud_DB_Performance_Engineering/
   - Q3: 98% faster (8.4s → 0.2s)
 
 #### Visual Comparison
-![Visual Comparison](plots/example_plot.png)
+![Visual Comparison](Project_DB_Performance_Benchmark/plots/example_plot.png)
 
 ### Learnings
 - Built a reproducible benchmarking setup with Docker + PostgreSQL
