@@ -40,7 +40,7 @@ Cloud_DB_Performance_Engineering/
 ```
 
 ### Workflow
-1. **Data Ingestion** – Load raw NYC Taxi data into PostgreSQL
+1. **Data Ingestion** – Loaded raw NYC Taxi data (~3.5M rows, January 2025) into PostgreSQL
 2. **Baseline Queries** – Run representative SQL queries, capture timings
 3. **LLM-assisted Tuning** – Asked ChatGPT to improve baseline queries (e.g., change BETWEEN to half-open ranges, suggest composite indexes). Incorporated these into tuned_queries.sql.
 4. **Benchmarking** – Ran both baseline and tuned queries via run_benchmarks.py, saving execution times to results.csv
@@ -50,7 +50,7 @@ Cloud_DB_Performance_Engineering/
 - LLM suggested improvements such as:
   - Rewriting date filters from BETWEEN to half-open ranges for index efficiency
   - Adding a composite index (pu_location_id, tpep_pickup_datetime)
-- Benchmarks showed significant runtime improvements (See `benchmarks/results.csv` for raw timings):
+- Benchmarks were run on ~3.5M rows of data and showed significant runtime improvements (see `benchmarks/results.csv` for raw timings):
   - Q1: 57% faster (2.2s → 0.9s)
   - Q2: 98% faster (155ms → 4ms)
   - Q3: 98% faster (8.4s → 0.2s)
