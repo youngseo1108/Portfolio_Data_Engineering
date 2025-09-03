@@ -1,5 +1,5 @@
 -- Q1 tuned: pre-aggregate (same as baseline; serves as control)
-SELECT hr, COUNT(*) trips 
+SELECT hr, COUNT(*) trips
 FROM analytics.trips_by_hour
 GROUP BY hr
 ORDER BY hr;

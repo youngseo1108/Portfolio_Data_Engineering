@@ -41,7 +41,7 @@ services:
     working_dir: /work
     volumes:
       - ./:/work
-    entrypoint: ["bash","-lc","pip install -q psycopg2-binary pandas matplotlib requests python-dotenv && tail -f /dev/null"]
+    entrypoint: ["bash","-lc","pip install -q psycopg2-binary pandas SQLAlchemy requests python-dotenv && tail -f /dev/null"]
     depends_on:
       postgres:
         condition: service_healthy

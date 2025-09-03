@@ -1,0 +1,7 @@
+file,query,time_ms
+baseline_queries.sql,baseline_Q1,2206.9485770043684
+baseline_queries.sql,baseline_Q2,155.4312119988026
+baseline_queries.sql,baseline_Q3,8408.515043993248
+tuned_queries.sql,tuned_Q1,937.6033500011545
+tuned_queries.sql,tuned_Q2,3.597995004383847
+tuned_queries.sql,tuned_Q3,188.13071500335354

@@ -2,6 +2,8 @@ import sqlalchemy
 import pandas as pd
 from dotenv import load_dotenv
 import os
+# import traceback
+from io import StringIO
 
 # load values from .env
 load_dotenv()
@@ -17,6 +19,8 @@ connection_string=f'postgresql://{user}:{password}@{server}:{port}/{database}'
 engine = sqlalchemy.create_engine(connection_string)
 engine.connect()
 
+
+print(">>> reading file...")
 df = pd.read_parquet('./data/raw/yellow_tripdata_2025-01.parquet').rename(columns={
   'VendorID': 'vendor_id',
   'RatecodeID': 'ratecode_id',
@@ -30,5 +34,69 @@ cols = ['vendor_id', 'tpep_pickup_datetime', 'tpep_dropoff_datetime',
        'improvement_surcharge', 'total_amount']
 df = df[cols]
 
-df.to_sql('taxi', engine, schema='raw', if_exists='replace', index=False)
-df.head()
+# --- normalize dtypes to match Postgres table ---
+# timestamps
+df["tpep_pickup_datetime"]  = pd.to_datetime(df["tpep_pickup_datetime"], errors="coerce")
+df["tpep_dropoff_datetime"] = pd.to_datetime(df["tpep_dropoff_datetime"], errors="coerce")
+
+# integer columns in raw.taxi
+int_cols = [
+  "vendor_id", "passenger_count", "ratecode_id",
+  "pu_location_id", "do_location_id", "payment_type"
+]
+for c in int_cols:
+  df[c] = pd.to_numeric(df[c], errors="coerce").round().astype("Int64")
+
+# floats / money-like
+float_cols = [
+  "trip_distance", "fare_amount", "extra", "mta_tax",
+  "tip_amount", "tolls_amount", "improvement_surcharge", "total_amount"
+]
+for c in float_cols:
+  df[c] = pd.to_numeric(df[c], errors="coerce")
+
+# store_and_fwd_flag as 1-char text; also normalize unexpected values
+df["store_and_fwd_flag"] = df["store_and_fwd_flag"].astype("string").str.upper().str.strip()
+df.loc[~df["store_and_fwd_flag"].isin(["Y","N"]), "store_and_fwd_flag"] = pd.NA
+
+print(">>> df shape:", df.shape)
+print(">>> df head:\n", df.head().to_string(index=False))
+
+print(">>> writing via COPY (fast path)...")
+buffer = StringIO()
+df.to_csv(buffer, index=False)  # include header
+buffer.seek(0)
+
+cols = ",".join([f'"{c}"' for c in df.columns])  # quote col names
+
+conn = engine.raw_connection()
+try:
+  cur = conn.cursor()
+  cur.copy_expert(f'COPY raw.taxi ({cols}) FROM STDIN WITH CSV HEADER', buffer)
+  conn.commit()
+  cur.close()
+finally:
+  conn.close()
+
+print(">>> COPY done.")
+
+## METHOD 2: Slow yet straightforward
+# print(">>> writing to Postgres (test 1k rows)...")
+# sample = df.iloc[:1000].copy()
+
+# try:
+#   sample.to_sql('taxi', con=engine, schema='raw', if_exists='append', index=False, method='multi', chunksize=10_000)
+#   print(">>> 1k-row test insert OK")
+# except Exception as e:
+#   print(">>> ERROR during 1k insert:\n", e)
+#   traceback.print_exc()
+#   raise
+
+# print(">>> writing full dataset...")
+# try:
+#   df.to_sql('taxi', con=engine, schema='raw', if_exists='append', index=False, method='multi', chunksize=10_000)
+#   print(">>> done.")
+# except Exception as e:
+#   print(">>> ERROR during full insert:\n", e)
+#   traceback.print_exc()
+#   raise
