@@ -5,3 +5,4 @@ venv/
 debugging.ipynb
 *.png
 data/
+genai/

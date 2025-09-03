@@ -16,7 +16,7 @@ This project simulates enterprise-scale database performance engineering tasks i
 ### Tech Stack
 - **Databases**: PostgreSQL  
 - **Storage/Infra**: MinIO (S3-compatible), Docker, Ubuntu/WSL2  
-- **Automation**: Python (psycopg2, pandas)  
+- **Automation**: Python (psycopg2, pandas)
 - **Visualisation**: matplotlib  
 - **GenAI**: OpenAI API for SQL tuning
 
@@ -24,7 +24,7 @@ This project simulates enterprise-scale database performance engineering tasks i
 ```sh
 Cloud_DB_Performance_Engineering/
 ├── data/
-│   └── raw/                      # Sample dataset (subset of NYC Taxi)
+│   └── raw/                      # Sample dataset (source: https://www.nyc.gov/site/tlc/about/tlc-trip-record-data.page)
 ├── ingestion/
 │   └── postgres_load.sql         # Load data into Postgres
 ├── benchmarks/
@@ -48,8 +48,6 @@ Cloud_DB_Performance_Engineering/
 - Achieved significant query runtime improvements through indexing and LLM-assisted rewrites
 - LLM detected inefficient joins and recommended multi-column indexes
 - Visual comparison of baseline vs tuned queries (see example below)
-
-
 
 ### Learnings
 - Designed a reproducible benchmarking setup with Docker + PostgreSQL
