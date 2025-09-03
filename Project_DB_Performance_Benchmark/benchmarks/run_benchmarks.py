@@ -8,6 +8,7 @@ DB = dict(
   dbname=os.getenv('POSTGRES_DB', 'perfdb')
 )
 
+
 def run_sql(cur, sql_text):
   t0 = time.perf_counter()
   cur.execute(sql_text)
@@ -17,6 +18,7 @@ def run_sql(cur, sql_text):
     pass
   return (time.perf_counter() - t0) * 1000
 
+
 def run_file(cur, path, label):
   with open(path, 'r', encoding='utf-8') as f:
     queries = [ q.strip() for q in f.read().split(';') if q.strip() ]
@@ -25,6 +27,7 @@ def run_file(cur, path, label):
     ms = run_sql(cur, q)
     res.append((Path(path).name, f'{label}_Q{i+1}', ms))
   return res
+
 
 def main():
   out = Path(__file__).with_name('results.csv')

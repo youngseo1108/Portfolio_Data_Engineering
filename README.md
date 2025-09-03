@@ -4,11 +4,10 @@ This portfolio showcases my personal and academic projects related to **data eng
 
 ## 1. Cloud-based Database Performance Benchmarking with LLM-assisted SQL Tuning
 
-This project simulates enterprise-scale database performance engineering tasks in a cloud-like environment, using PostgreSQL, Docker, and MinIO for data storage, with Python scripts for benchmarking and a minimal Streamlit dashboard for visualization.
-It showcases how LLMs can assist in query tuning by suggesting rewrites and indexing strategies that improve performance.
+This project simulates enterprise-scale database performance engineering tasks in a cloud-like environment, using PostgreSQL, Docker, and MinIO for data storage, with Python scripts for benchmarking and visualisation. It showcases how LLMs can assist in query tuning by suggesting rewrites and indexing strategies that improve performance.
 
 ### Goals
-- Benchmark and optimize SQL queries in PostgreSQL
+- Benchmark and optimise SQL queries in PostgreSQL
 - Simulate cloud-native workflows with MinIO + Docker
 - Automate query benchmarking and log results with Python
 - Apply LLM-assisted SQL tuning to generate query rewrites and indexing hints
@@ -18,7 +17,7 @@ It showcases how LLMs can assist in query tuning by suggesting rewrites and inde
 - **Databases**: PostgreSQL  
 - **Storage/Infra**: MinIO (S3-compatible), Docker, Ubuntu/WSL2  
 - **Automation**: Python (psycopg2, pandas)  
-- **Visualization**: matplotlib  
+- **Visualisation**: matplotlib  
 - **GenAI**: OpenAI API for SQL tuning
 
 ### Folder structure
@@ -49,6 +48,8 @@ Cloud_DB_Performance_Engineering/
 - Achieved significant query runtime improvements through indexing and LLM-assisted rewrites
 - LLM detected inefficient joins and recommended multi-column indexes
 - Visual comparison of baseline vs tuned queries (see example below)
+
+
 
 ### Learnings
 - Designed a reproducible benchmarking setup with Docker + PostgreSQL
