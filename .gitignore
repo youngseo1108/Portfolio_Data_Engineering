@@ -5,3 +5,4 @@ venv/
 debugging.ipynb
 data/
 genai/
+.env
