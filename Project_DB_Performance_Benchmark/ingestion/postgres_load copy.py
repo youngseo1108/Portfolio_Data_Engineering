@@ -2,12 +2,12 @@ import sqlalchemy
 import pandas as pd
 from dotenv import load_dotenv
 import os
+# import traceback
 from io import StringIO
 
 # load values from .env
 load_dotenv()
 
-# postgres settings
 server = os.getenv('POSTGRES_HOST', 'postgres')
 user = os.getenv('POSTGRES_USER', 'postgres')
 password = os.getenv('POSTGRES_PASSWORD', 'postgres')
@@ -15,24 +15,13 @@ database = os.getenv('POSTGRES_DB', 'perfdb')
 port = os.getenv('POSTGRES_PORT', '5432')
 
 connection_string=f'postgresql://{user}:{password}@{server}:{port}/{database}'
+
 engine = sqlalchemy.create_engine(connection_string)
 engine.connect()
 
-# minio settings
-s3_endpoint = os.getenv('MINIO_ENDPOINT_CONTAINER', 'http://minio:9000')
-s3_region = os.getenv('MINIO_DEFAULT_REGION', 'us-east-1')
-s3_key = os.getenv('MINIO_ROOT_USER', 'admin')
-s3_secret = os.getenv('MINIO_ROOT_PASSWORD', 'supersecret')
-s3_url = f"s3://{os.getenv('MINIO_BUCKET','raw')}/yellow_tripdata_2025-01.parquet"
-storage_opts = {
-  'key': s3_key,
-  'secret': s3_secret,
-  'client_kwargs': {'endpoint_url': s3_endpoint,
-                    'region_name': s3_region}
-}
 
 print(">>> reading file...")
-df = pd.read_parquet(s3_url, storage_options=storage_opts).rename(columns={
+df = pd.read_parquet('./data/raw/yellow_tripdata_2025-01.parquet').rename(columns={
   'VendorID': 'vendor_id',
   'RatecodeID': 'ratecode_id',
   'PULocationID': 'pu_location_id',
@@ -45,7 +34,7 @@ cols = ['vendor_id', 'tpep_pickup_datetime', 'tpep_dropoff_datetime',
        'improvement_surcharge', 'total_amount']
 df = df[cols]
 
-# --- normalise dtypes to match Postgres table ---
+# --- normalize dtypes to match Postgres table ---
 # timestamps
 df["tpep_pickup_datetime"]  = pd.to_datetime(df["tpep_pickup_datetime"], errors="coerce")
 df["tpep_dropoff_datetime"] = pd.to_datetime(df["tpep_dropoff_datetime"], errors="coerce")
