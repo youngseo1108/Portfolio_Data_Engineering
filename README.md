@@ -98,7 +98,7 @@ A research-driven project focused on improving the efficiency of inequality join
 
 
 #### Visual Comparison
-![output](output.png)
+![output](Thesis_Inequality_Join/output.png)
 Performance comparison under different overlap conditions (n = 1k rows):  
 - **Case 0:** No overlap
 - **Case 1:** Full overlap
