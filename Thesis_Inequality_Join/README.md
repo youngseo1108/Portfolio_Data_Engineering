@@ -27,7 +27,7 @@ A research-driven project focused on improving the efficiency of inequality join
 
 
 #### Visual Comparison
-![output](output.png)
+![output](output.png)<br/>
 Performance comparison under different overlap conditions (n = 1k rows):  
 - **Case 0:** No overlap
 - **Case 1:** Full overlap
