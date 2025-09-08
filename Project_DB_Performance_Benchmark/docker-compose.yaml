@@ -23,7 +23,7 @@ services:
     working_dir: /work
     volumes:
       - ./:/work
-    entrypoint: ["bash","-lc","pip install -q psycopg2-binary pandas SQLAlchemy requests python-dotenv && tail -f /dev/null"]
+    entrypoint: ["bash","-lc","pip install -q psycopg2-binary pandas SQLAlchemy requests python-dotenv boto3 pyarrow fsspec s3fs && tail -f /dev/null"]
     depends_on:
       postgres:
         condition: service_healthy
@@ -50,6 +50,17 @@ services:
       timeout: 3s
       retries: 20
 
+  aws:
+    image: amazon/aws-cli:latest
+    depends_on:
+      - minio
+    working_dir: /work
+    volumes:
+      - ./:/work
+    environment:
+      AWS_ACCESS_KEY_ID: ${MINIO_ROOT_USER}
+      AWS_SECRET_ACCESS_KEY: ${MINIO_ROOT_PASSWORD}
+      AWS_DEFAULT_REGION: us-east-1
 
 volumes:
   pgdata:

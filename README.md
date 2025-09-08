@@ -13,8 +13,8 @@ This project simulates enterprise-scale database performance engineering tasks i
 - Visualise baseline vs tuned performance
 
 ### Tech Stack
-- **Databases**: PostgreSQL  
-- **Storage/Infra**: Docker, Ubuntu/WSL2  
+- **Databases**: PostgreSQL
+- **Storage/Infra**: Docker, Ubuntu/WSL2
 - **Automation**: Python (psycopg2, pandas)
 - **Visualisation**: matplotlib  
 - **GenAI**: ChatGPT (LLM suggestions for query tuning)
@@ -22,8 +22,8 @@ This project simulates enterprise-scale database performance engineering tasks i
 ### Folder structure
 ```sh
 Cloud_DB_Performance_Engineering/
-├── data/
-│   └── raw/                      # Sample dataset (NYC Taxi: https://www.nyc.gov/site/tlc/about/tlc-trip-record-data.page)
+├── data/                         # ignored because of the size issue
+│   └── raw/                      # Dataset (source: NYC Taxi, https://www.nyc.gov/site/tlc/about/tlc-trip-record-data.page)
 ├── ingestion/
 │   ├── postgres_init.sql         # Create schemas & tables for Postgres
 │   └── postgres_load.py          # Load data into Postgres
@@ -88,9 +88,9 @@ A research-driven project focused on improving the efficiency of inequality join
 
 ### Outcomes
 - Showed that **algorithm performance depends heavily on overlap density** in interval datasets  
-- **Modified IEJoin** was the most efficient under low to moderate overlap (≈10–50%)  
-- **Brute-force join** (baseline) outperformed all others under very high overlap (>90%) due to minimal filtering overhead  
-- **Modified RMJ/OMJ**, while theoretically efficient, underperformed than expected and in some cases slower than the baseline, revealing gaps for further optimisation
+  - **Modified IEJoin** was the most efficient under low to moderate overlap (≈10–50%)  
+  - **Brute-force join** (baseline) outperformed all others under very high overlap (>90%) due to minimal filtering overhead  
+  - **Modified RMJ/OMJ**, while theoretically efficient, underperformed than expected and in some cases slower than the baseline, revealing gaps for further optimisation
 - **Modified IEJoin** showed that filtering order matters:
   - Interval-based filtering first (r.B < s.E ∧ r.E > s.B) was faster when overlaps were sparse or moderate (e.g., no overlap or ≈10–50%)
   - Index-based filtering first (r.idx > s.idx) was more efficient when most intervals overlapped (e.g., >90% or full overlap)
@@ -98,11 +98,7 @@ A research-driven project focused on improving the efficiency of inequality join
 
 
 #### Visual Comparison
-<<<<<<< HEAD
 ![output](Thesis_Inequality_Join/output.png)<br/>
-=======
-![output](output.png)
->>>>>>> 23f2267 (expanded the detailed descriptions of the thesis project)
 Performance comparison under different overlap conditions (n = 1k rows):  
 - **Case 0:** No overlap
 - **Case 1:** Full overlap

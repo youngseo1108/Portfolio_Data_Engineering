@@ -1,8 +1,15 @@
--- Q1 tuned: pre-aggregate (same as baseline; serves as control)
-SELECT hr, COUNT(*) trips
-FROM analytics.trips_by_hour
-GROUP BY hr
-ORDER BY hr;
+-- Q1: Hourly trip counts (tuned)
+WITH trips AS (
+    SELECT 
+        date_trunc('hour', tpep_pickup_datetime)::timestamp AS pickup_hour
+    FROM raw.taxi
+)
+SELECT
+    pickup_hour,
+    COUNT(*) AS trips
+FROM trips
+GROUP BY pickup_hour
+ORDER BY pickup_hour;
 
 -- Q2 tuned: add multi-column index suggestion in README; query same
 SELECT COUNT(*)

@@ -1,8 +1,8 @@
 import sqlalchemy
 import pandas as pd
 from dotenv import load_dotenv
-import os
-from io import StringIO
+import os, boto3
+from io import StringIO, BytesIO
 
 # load values from .env
 load_dotenv()
@@ -19,24 +19,23 @@ engine = sqlalchemy.create_engine(connection_string)
 engine.connect()
 
 # minio settings
-s3_endpoint = os.getenv('MINIO_ENDPOINT_CONTAINER', 'http://minio:9000')
-s3_region = os.getenv('MINIO_DEFAULT_REGION', 'us-east-1')
-s3_key = os.getenv('MINIO_ROOT_USER', 'admin')
-s3_secret = os.getenv('MINIO_ROOT_PASSWORD', 'supersecret')
-s3_url = f"s3://{os.getenv('MINIO_BUCKET','raw')}/yellow_tripdata_2025-01.parquet"
-storage_opts = {
-  'key': s3_key,
-  'secret': s3_secret,
-  'client_kwargs': {'endpoint_url': s3_endpoint,
-                    'region_name': s3_region}
-}
+s3 = boto3.client(
+    's3',
+    endpoint_url=os.getenv('MINIO_ENDPOINT_CONTAINER', 'http://minio:9000'),
+    aws_access_key_id=os.getenv('MINIO_ROOT_USER', 'admin'),
+    aws_secret_access_key=os.getenv('MINIO_ROOT_PASSWORD', 'supersecret'),
+    region_name=os.getenv('MINIO_DEFAULT_REGION', 'us-east-1')
+)
+bucket = os.getenv('MINIO_BUCKET','raw')
 
 print(">>> reading file...")
-df = pd.read_parquet(s3_url, storage_options=storage_opts).rename(columns={
-  'VendorID': 'vendor_id',
-  'RatecodeID': 'ratecode_id',
-  'PULocationID': 'pu_location_id',
-  'DOLocationID': 'do_location_id'})
+obj = s3.get_object(Bucket=bucket, Key='yellow_tripdata_2025-01.parquet')
+df = pd.read_parquet(BytesIO(obj['Body'].read())).rename(columns={
+                        'VendorID': 'vendor_id',
+                        'RatecodeID': 'ratecode_id',
+                        'PULocationID': 'pu_location_id',
+                        'DOLocationID': 'do_location_id'
+                        })
 
 cols = ['vendor_id', 'tpep_pickup_datetime', 'tpep_dropoff_datetime',
        'passenger_count', 'trip_distance', 'ratecode_id', 'store_and_fwd_flag',
