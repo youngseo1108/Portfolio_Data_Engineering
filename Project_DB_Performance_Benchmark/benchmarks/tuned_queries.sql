@@ -1,4 +1,4 @@
--- Q1: Hourly trip counts (tuned)
+-- Q1: hourly trips
 WITH trips AS (
     SELECT 
         date_trunc('hour', tpep_pickup_datetime)::timestamp AS pickup_hour
@@ -11,14 +11,16 @@ FROM trips
 GROUP BY pickup_hour
 ORDER BY pickup_hour;
 
--- Q2 tuned: add multi-column index suggestion in README; query same
+
+-- Q2: selective (σ) location filter + time window
 SELECT COUNT(*)
 FROM raw.taxi
-WHERE pu_location_id IN (1, 2, 3)
-AND tpep_pickup_datetime >= '2025-01-15'
-AND tpep_pickup_datetime < '2025-02-01';
+WHERE pu_location_id IN (1,2,3)
+AND tpep_pickup_datetime >= TIMESTAMP '2025-01-15'
+AND tpep_pickup_datetime < TIMESTAMP '2025-02-01';
 
--- Q3 tuned: reduce rows then window
+
+-- Q3: window function
 WITH subset AS (
   SELECT pu_location_id, total_amount 
   FROM raw.taxi
