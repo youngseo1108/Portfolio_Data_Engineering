@@ -6,5 +6,8 @@ debugging.ipynb
 data/
 genai/
 .env
+
 # A project in process...
-Project_Finloop17/
+Project_Finloop17/practice.ipynb
+Project_Finloop17/venv/
+Project_Finloop17/data/
