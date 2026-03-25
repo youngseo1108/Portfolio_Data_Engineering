@@ -11,3 +11,5 @@ genai/
 Project_Finloop17/practice.ipynb
 Project_Finloop17/venv/
 Project_Finloop17/data/
+Project_Finloop17/.env/
+Working/*
